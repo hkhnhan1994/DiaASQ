@@ -1,7 +1,15 @@
 import os
 import pandas as pd
+import re
 
-
+# Function to preprocess text and remove non-alphabet characters
+def preprocess_text(text):
+    try:
+        new_text = re.sub(r'[^\w\s\d]', '', text)  # Remove non-alphabet characters
+        new_text = re.sub(r'\s+', ' ', new_text)  # Replace multiple spaces with a single space
+        return new_text
+    except:
+        return text
 # following the ACOS format, [a, c, s, o ]
 def assign_positions_to_paragraphs(paragraphs, triplets):
     result = []
@@ -25,13 +33,22 @@ def assign_positions_to_paragraphs(paragraphs, triplets):
             # Process the current paragraph
             try:
               if new_s.index(aspect)==(index-spot):
+                aspect=preprocess_text(aspect)
+                category=preprocess_text(category)
+                sentiment=preprocess_text(sentiment)
+                opinion=preprocess_text(opinion)
                 assigned_targets.append([aspect,category,sentiment,opinion])
             except:
+                aspect=preprocess_text(aspect)
+                category=preprocess_text(category)
+                sentiment=preprocess_text(sentiment)
+                opinion=preprocess_text(opinion)
                 assigned_targets.append(['NULL',category,sentiment,opinion])
           
       spot += len(p.split())
       # Append the paragraph with its assigned positions
-      result.append([p, assigned_targets])
+      cleaned_string=preprocess_text(p)
+      result.append([cleaned_string, assigned_targets])
       assigned_targets = []
     return result
 
