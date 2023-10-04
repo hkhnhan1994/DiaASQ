@@ -1,17 +1,21 @@
 import os
 import pandas as pd
-import re
-
-# Function to preprocess text and remove non-alphabet characters
-def preprocess_text(text):
+import json
+unique_categories=[]
+# Function to preprocess text and remove special characters
+def remove_specific_special_chars(text, special_chars_path= 'special_characters.txt'):
     try:
-        new_text = re.sub(r'[^\w\s\d]', '', text)  # Remove non-alphabet characters
-        new_text = re.sub(r'\s+', ' ', new_text)  # Replace multiple spaces with a single space
-        return new_text
-    except:
-        return text
+        with open(special_chars_path, 'r') as file:
+            chars_to_remove = [line.strip() for line in file]
+            # Remove specific special characters from the text
+            new_text=text
+            for char in chars_to_remove:
+                new_text = new_text.replace(char, '')
+            return new_text
+    except: return text
 # following the ACOS format, [a, c, s, o ]
 def assign_positions_to_paragraphs(paragraphs, triplets):
+    global unique_categories
     result = []
     spot=0
     for p in paragraphs:
@@ -27,27 +31,29 @@ def assign_positions_to_paragraphs(paragraphs, triplets):
           if (index-spot) < len(p.split()) and (index-spot)>=0:
             merged_elements = ' '.join(p.split()[index-spot:index-spot + count]).replace(',','').strip()
             new_s=p.split()
-
+            
             del new_s[index-spot:index-spot + count]
             new_s.insert(index-spot, merged_elements)
             # Process the current paragraph
             try:
               if new_s.index(aspect)==(index-spot):
-                aspect=preprocess_text(aspect)
-                category=preprocess_text(category)
-                sentiment=preprocess_text(sentiment)
-                opinion=preprocess_text(opinion)
+                aspect=remove_specific_special_chars(aspect)
+                category=remove_specific_special_chars(category)
+                if category !='NULL': unique_categories.append(category)
+                sentiment=remove_specific_special_chars(sentiment)
+                opinion=remove_specific_special_chars(opinion)
                 assigned_targets.append([aspect,category,sentiment,opinion])
             except:
-                aspect=preprocess_text(aspect)
-                category=preprocess_text(category)
-                sentiment=preprocess_text(sentiment)
-                opinion=preprocess_text(opinion)
+                aspect=remove_specific_special_chars(aspect)
+                category=remove_specific_special_chars(category)
+                if category !='NULL': unique_categories.append(category)
+                sentiment=remove_specific_special_chars(sentiment)
+                opinion=remove_specific_special_chars(opinion)
                 assigned_targets.append(['NULL',category,sentiment,opinion])
           
       spot += len(p.split())
       # Append the paragraph with its assigned positions
-      cleaned_string=preprocess_text(p)
+      cleaned_string=remove_specific_special_chars(p)
       result.append([cleaned_string, assigned_targets])
       assigned_targets = []
     return result
@@ -58,7 +64,6 @@ def list_to_string(lst):
 # Specify the directory path
 directory_path= 'DiaASQ/data/dataset/jsons_en'
 Folder_path=os.path.join(os.getcwd(),directory_path)
-
 # Get a list of all files in the directory
 file_paths = [os.path.join(Folder_path, filename) for filename in os.listdir(Folder_path) if os.path.isfile(os.path.join(Folder_path, filename))]
 
@@ -87,6 +92,11 @@ for path in file_paths:
     source_name=os.path.basename(path).split('.')[0]+'.txt'
     output_json_file=os.path.join(os.getcwd(),out_put_folder_path,source_name)
     final_result['Formated'].to_csv(output_json_file, sep='\t', index=False, header=False)
+    
+# export categorical
+unique_categories = list(set(unique_categories))
+with open(os.path.join(os.getcwd(),out_put_folder_path,'categories.txt'), 'w') as file:
+        json.dump(unique_categories, file)
 print (f"dataset located in {os.path.join(os.getcwd(),out_put_folder_path)}")
     
 
