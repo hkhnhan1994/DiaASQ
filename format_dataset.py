@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import json
 unique_categories=[]
+unique_sentiments=[]
 # Function to preprocess text and remove special characters
 def remove_specific_special_chars(text, special_chars_path= 'special_characters.txt'):
     try:
@@ -15,7 +16,7 @@ def remove_specific_special_chars(text, special_chars_path= 'special_characters.
     except: return text
 # following the ACOS format, [a, c, s, o ]
 def assign_positions_to_paragraphs(paragraphs, triplets):
-    global unique_categories
+    global unique_categories,unique_sentiments
     result = []
     spot=0
     for p in paragraphs:
@@ -25,10 +26,11 @@ def assign_positions_to_paragraphs(paragraphs, triplets):
           count = t[1]
           aspect = t[7] if t[7] !="" else 'NULL'
           sentiment= t[6] if t[6] !="" else 'NULL'
+          unique_sentiments.append(sentiment)
           category = t[8] if t[8] !="" else 'NULL'
           opinion = t[9] if t[9] !="" else 'NULL'
           count=count-index if count-index>0 else count
-          if (index-spot) < len(p.split()) and (index-spot)>=0:
+          if (index-spot) < len(p.split()) and (index-spot)>=0 and(aspect!= -1 and sentiment!= -1 and category!= -1 and opinion!= -1 ) and(sentiment not in [ 'doubt', 'amb', 'neu']) :
             merged_elements = ' '.join(p.split()[index-spot:index-spot + count]).replace(',','').strip()
             new_s=p.split()
             
@@ -98,5 +100,6 @@ unique_categories = list(set(unique_categories))
 with open(os.path.join(os.getcwd(),out_put_folder_path,'categories.txt'), 'w') as file:
         json.dump(unique_categories, file)
 print (f"dataset located in {os.path.join(os.getcwd(),out_put_folder_path)}")
+print(list(set(unique_sentiments)))
     
 
