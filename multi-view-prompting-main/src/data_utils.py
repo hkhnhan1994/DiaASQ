@@ -1,4 +1,4 @@
-import random, sys
+import random
 import json
 import numpy as np
 from itertools import permutations
@@ -8,7 +8,8 @@ from torch.utils.data import Dataset
 
 from t5_score import MyT5ForConditionalGenerationScore
 from const import *
-print("hello")
+
+
 def get_element_tokens(task):
     dic = {
         "aste":
@@ -243,7 +244,7 @@ def parse_aste_tuple(_tuple, sent):
     return res
 
 
-def get_task_tuple(_tuple:list, task):
+def get_task_tuple(_tuple, task):
     print(f'task:{task}')
     if task == "aste":
         at, ot, sp = _tuple
@@ -255,11 +256,10 @@ def get_task_tuple(_tuple:list, task):
         at, ac, sp, ot = _tuple
     else:
         raise NotImplementedError
-    # try:
+    print(sp)
     if sp:
+        print(sp)
         sp = sentword2opinion[sp.lower()] if sp in sentword2opinion else senttag2opinion[sp.lower()]  # 'POS' -> 'good'
-    # except:
-    #     print(sp)
     if at and at.lower() == 'null':  # for implicit aspect term
         at = 'it'
 
@@ -314,7 +314,6 @@ def get_para_targets(sents, labels, data_name, data_type, top_k, task, args):
         if args.sort_label and len(label) > 1:
             label_pos = {}
             for _tuple in label:
-                print(task)
                 at, ac, sp, ot = get_task_tuple(_tuple, task)
 
                 # get last at / ot position

@@ -160,8 +160,7 @@ phone_aspect_cate_list = ["water", "night scene mode", "dont play games", "overa
     "ecological", "adaptive refresh", "image", "motor", "mode", "flash memory", "film effect", "display frame rate scheduling", "color contrast", "cameras", "Hongmeng", "direct screens", "67w fast charge",
     "singlecore performance of the large core", "record video", "computing power", "Battery", "wifi", "quality of the main camera", "portrait", "freeze", "night scenes", "shoot videos", 
     "overall or SOOC quality", "MIUI", "quality of the pictures", "standby mode", "welding process", "black border", "swipe on Weibo", "call recording", "LCD screen", "play the glory of the king", "ISP", "specifications"]
-
-with open('force_tokens.json', 'r') as f:
+with open("force_tokens.json", 'r') as f:
     force_tokens = json.load(f)
 
 cate_list = {

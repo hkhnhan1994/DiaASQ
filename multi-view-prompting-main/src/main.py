@@ -26,7 +26,6 @@ from data_utils import ABSADataset, task_data_list, cal_entropy
 from const import *
 from data_utils import read_line_examples_from_file
 from eval_utils import compute_scores, extract_spans_para
-
 # configure logging at the root level of Lightning
 logging.getLogger("pytorch_lightning").setLevel(logging.INFO)
 
@@ -198,7 +197,7 @@ class T5FineTuner(pl.LightningModule):
                        attention_mask=batch["source_mask"],
                        labels=lm_labels,
                        decoder_attention_mask=batch['target_mask'])
-
+        
         loss = outputs[0]
         return loss
 
@@ -270,7 +269,7 @@ class T5FineTuner(pl.LightningModule):
                 0.0,
             },
         ]
-        optimizer = AdamW(optimizer_grouped_parameters,
+        optimizer = torch.optim.Adam(optimizer_grouped_parameters,
                           lr=self.config.learning_rate,
                           eps=self.config.adam_epsilon)
         scheduler = {
@@ -590,8 +589,6 @@ def evaluate(model, task, data, data_type):
 
 
 def train_function(args):
-
-    print("training function")
     model_path = os.path.join(args.output_dir, "final")
     print(f" output_dir: {args.output_dir}")
     # training process
@@ -629,7 +626,12 @@ def train_function(args):
         # initialize the T5 model
         tfm_model = MyT5ForConditionalGeneration.from_pretrained(
             args.model_name_or_path, local_files_only=True if args.model_name_or_path != "t5-base" else False)
+        
         model = T5FineTuner(args, tfm_model, tokenizer)
+        # Enable gradients for all model parameters
+        for param in model.parameters():
+            sys.stdout.write(f"force requires_grad to true:{param}")
+            param.requires_grad = True
 
         # load data
         train_loader = model.train_dataloader()
@@ -676,7 +678,7 @@ def train_function(args):
         )
 
         trainer = pl.Trainer(**train_params)
-
+        
         trainer.fit(model)
 
         # save the final model

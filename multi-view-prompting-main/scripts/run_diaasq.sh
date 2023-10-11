@@ -15,30 +15,28 @@ OUT_DIR="../outputs/$TASK/top${K}_seed${SEED}"
 mkdir -p $OUT_DIR
 
 
-python3 main.py  \
+python main.py \
     --data_path "../data/" \
     --dataset "phone" \
     --model_name_or_path t5-base \
     --output_dir $OUT_DIR \
-    --num_train_epochs 20 \
+    --num_train_epochs 5 \
     --save_top_k 0 \
     --task $TASK \
     --top_k $K \
     --ctrl_token $CTRL_TOKEN \
-    --multi_path \
     --num_path $INFER_PATH \
     --seed $SEED \
-    --train_batch_size 16 \
-    --gradient_accumulation_steps 1 \
+    --train_batch_size 8 \
+    --gradient_accumulation_steps 3 \
     --learning_rate 1e-4 \
     --lowercase \
     --sort_label \
     --data_ratio 1.0 \
-    --check_val_every_n_epoch 10  \
+    --check_val_every_n_epoch 5  \
     --agg_strategy vote \
-    --eval_batch_size 64 \
+    --eval_batch_size 8 \
     --constrained_decode \
-    --multi_task \
     --do_train \
     > $OUT_DIR/train.log
     # --load_ckpt_name "best.ckpt" \
