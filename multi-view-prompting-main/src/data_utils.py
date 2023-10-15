@@ -184,7 +184,7 @@ def choose_best_order_global(sents, labels, model, tokenizer, device, task):
         quad_list = []
         for _tuple in label:
             # parse ASTE tuple
-            if task == "aste":
+            if task ["aste","diaasq"]:
                 _tuple = parse_aste_tuple(_tuple, sent)
 
             at, ac, sp, ot = get_task_tuple(_tuple, task)
@@ -257,7 +257,8 @@ def get_task_tuple(_tuple, task):
     else:
         raise NotImplementedError
     if sp:
-        print(sp)
+        sys.stdout.write(f"error:")
+        sys.stdout.write(sp)
         sp = sentword2opinion[sp.lower()] if sp in sentword2opinion else senttag2opinion[sp.lower()]  # 'POS' -> 'good'
     if at and at.lower() == 'null':  # for implicit aspect term
         at = 'it'
@@ -288,7 +289,7 @@ def get_para_targets(sents, labels, data_name, data_type, top_k, task, args):
     """
     targets = []
     new_sents = []
-    if task in ['aste', 'tasd']:
+    if task in ['aste', 'tasd','diaasq']:
         # at most 5 orders for triple tasks
         top_k = min(5, top_k)
 
@@ -300,7 +301,7 @@ def get_para_targets(sents, labels, data_name, data_type, top_k, task, args):
         cur_sent_str = " ".join(cur_sent)
 
         # ASTE: parse at & ot
-        if task == 'aste':
+        if task in ['aste','diaasq']:
             assert len(label[0]) == 3
             parsed_label = []
             for _tuple in label:
@@ -376,7 +377,7 @@ def get_para_targets_dev(sents, labels, data_name, task, args):
         all_quad_sentences = []
         for _tuple in label:
             # parse ASTE tuple
-            if task == "aste":
+            if task in ["aste","diaasq"]:
                 _tuple = parse_aste_tuple(_tuple, sent)
 
             at, ac, sp, ot = get_task_tuple(_tuple, task)
