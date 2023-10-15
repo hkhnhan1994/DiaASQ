@@ -20,7 +20,7 @@ python main.py \
     --dataset "phone" \
     --model_name_or_path t5-base \
     --output_dir $OUT_DIR \
-    --num_train_epochs 5 \
+    --num_train_epochs 14 \
     --save_top_k 0 \
     --task $TASK \
     --top_k $K \
@@ -33,7 +33,7 @@ python main.py \
     --lowercase \
     --sort_label \
     --data_ratio 1.0 \
-    --check_val_every_n_epoch 5  \
+    --check_val_every_n_epoch 2  \
     --agg_strategy vote \
     --eval_batch_size 8 \
     --constrained_decode \
