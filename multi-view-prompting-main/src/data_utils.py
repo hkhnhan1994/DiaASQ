@@ -256,7 +256,6 @@ def get_task_tuple(_tuple, task):
         at, ac, sp, ot = _tuple
     else:
         raise NotImplementedError
-    print(sp)
     if sp:
         print(sp)
         sp = sentword2opinion[sp.lower()] if sp in sentword2opinion else senttag2opinion[sp.lower()]  # 'POS' -> 'good'
