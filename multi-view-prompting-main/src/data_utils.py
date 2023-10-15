@@ -257,8 +257,6 @@ def get_task_tuple(_tuple, task):
     else:
         raise NotImplementedError
     if sp:
-        sys.stdout.write(f"error:")
-        sys.stdout.write(sp)
         sp = sentword2opinion[sp.lower()] if sp in sentword2opinion else senttag2opinion[sp.lower()]  # 'POS' -> 'good'
     if at and at.lower() == 'null':  # for implicit aspect term
         at = 'it'
