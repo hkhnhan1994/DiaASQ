@@ -39,9 +39,9 @@ def inference(args, start_idx=0, end_idx=200):
             gold_list = extract_spans_para(target, 'gold')
             print(gold_list)
 
-            if args.task in ['asqp', 'acos', 'diaasq']:
+            if args.task in ['asqp', 'acos']:
                 gold_list = [(at, ot, ac, opinion2sentword[sp]) for (ac, at, sp, ot) in gold_list]
-            elif args.task == "aste":
+            elif args.task in ["aste",'diaasq']:
                 gold_list = [(at, ot, opinion2sentword[sp]) for (ac, at, sp, ot) in gold_list]
             elif args.task == "tasd":
                 gold_list = [(at, ac, opinion2sentword[sp]) for (ac, at, sp, ot) in gold_list]

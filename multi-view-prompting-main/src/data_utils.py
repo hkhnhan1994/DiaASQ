@@ -21,7 +21,7 @@ def get_element_tokens(task):
         "asqp":
             ["[A]", "[O]", "[C]", "[S]"],
         "diaasq":
-            ["[A]", "[O]", "[C]", "[S]"],
+            ["[A]", "[O]", "[S]"],
     }
     return dic[task]
 
@@ -246,13 +246,13 @@ def parse_aste_tuple(_tuple, sent):
 
 def get_task_tuple(_tuple, task):
     print(f'task:{task}')
-    if task == "aste":
+    if task in ["aste","diaasq"]:
         at, ot, sp = _tuple
         ac = None
     elif task == "tasd":
         at, ac, sp = _tuple
         ot = None
-    elif task in ["asqp", "acos","diaasq"]:
+    elif task in ["asqp", "acos"]:
         at, ac, sp, ot = _tuple
     else:
         raise NotImplementedError

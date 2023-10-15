@@ -318,5 +318,5 @@ heuristic_orders = {
     'tasd': ['[A] [C] [S]'],
     'asqp': ['[A] [O] [C] [S]'],
     'acos': ['[A] [O] [C] [S]'],
-    'diaasq': ['[A] [O] [C] [S]'],
+    'diaasq': ['[A] [O] [S]'],
 }
