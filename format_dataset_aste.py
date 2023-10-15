@@ -45,7 +45,7 @@ def assign_positions_to_paragraphs(paragraphs, triplets):
             # print(f"{_op.split()},{_opinion} ")
             # print(f"{_op.split()},{_opinion} ")
             # print(f"opinion: {opinion},aspect:{aspect}")
-            if sentiment !="" and sentiment != -1 and sentiment !="doubt":
+            if sentiment !="" and sentiment != -1 and sentiment in ["pos","neg","neu"]:
                 assigned_targets.append((_aspect,_opinion,sentiment))
                 categories.append(category)
             #   print(f"{cleaned_string}, [{_aspect},{_opinion},{sentiment}]")
