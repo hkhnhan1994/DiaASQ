@@ -20,7 +20,7 @@ python main.py \
     --dataset "phone" \
     --model_name_or_path t5-base \
     --output_dir $OUT_DIR \
-    --num_train_epochs 14 \
+    --num_train_epochs 12 \
     --save_top_k 0 \
     --task $TASK \
     --top_k $K \
