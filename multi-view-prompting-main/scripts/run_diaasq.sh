@@ -27,7 +27,7 @@ python main.py \
     --ctrl_token $CTRL_TOKEN \
     --num_path $INFER_PATH \
     --seed $SEED \
-    --train_batch_size 8 \
+    --train_batch_size 4 \
     --gradient_accumulation_steps 3 \
     --learning_rate 1e-4 \
     --lowercase \
@@ -35,7 +35,7 @@ python main.py \
     --data_ratio 1.0 \
     --check_val_every_n_epoch 2  \
     --agg_strategy vote \
-    --eval_batch_size 8 \
+    --eval_batch_size 4 \
     --constrained_decode \
     --do_train \
     # > $OUT_DIR/train.log
