@@ -41,5 +41,4 @@ python main.py \
     # > $OUT_DIR/train.log
     # --load_ckpt_name "best.ckpt" \
     # --load_path_cache \
-    > 2>&1 > $OUT_DIR/train.log
-done
+    > $OUT_DIR/train.log | 2>&1
