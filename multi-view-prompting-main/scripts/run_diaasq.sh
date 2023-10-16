@@ -28,7 +28,7 @@ python main.py \
     --num_path $INFER_PATH \
     --seed $SEED \
     --train_batch_size 2 \
-    --gradient_accumulation_steps 3 \
+    --gradient_accumulation_steps 1 \
     --learning_rate 1e-4 \
     --lowercase \
     --sort_label \
