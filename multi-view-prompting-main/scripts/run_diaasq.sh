@@ -20,7 +20,7 @@ python main.py \
     --dataset "phone" \
     --model_name_or_path t5-base \
     --output_dir $OUT_DIR \
-    --num_train_epochs 12 \
+    --num_train_epochs 10 \
     --save_top_k 0 \
     --task $TASK \
     --top_k $K \
@@ -38,8 +38,8 @@ python main.py \
     --eval_batch_size 8 \
     --constrained_decode \
     --do_train \
-    > $OUT_DIR/train.log
+    # > $OUT_DIR/train.log
     # --load_ckpt_name "best.ckpt" \
     # --load_path_cache \
-    # > $OUT_DIR/train.log 2>&1&
+    > $OUT_DIR/train.log 2>&1&
 done
