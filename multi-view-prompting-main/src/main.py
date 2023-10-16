@@ -593,6 +593,7 @@ def train_function(args):
     print(f" output_dir: {args.output_dir}")
     # training process
     if args.do_train:
+        torch.cuda.empty_cache()
         print("\n", "=" * 30, f"NEW EXP: {args.task} on {args.dataset}",
               "=" * 30, "\n")
         tokenizer = T5Tokenizer.from_pretrained(args.model_name_or_path, local_files_only=True if args.model_name_or_path != "t5-base" else False)
