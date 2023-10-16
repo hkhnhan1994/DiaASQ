@@ -245,7 +245,7 @@ def parse_aste_tuple(_tuple, sent):
 
 
 def get_task_tuple(_tuple, task):
-    print(f'task:{task}')
+    # print(f'task:{task}')
     if task in ["aste","diaasq"]:
         at, ot, sp = _tuple
         ac = None
