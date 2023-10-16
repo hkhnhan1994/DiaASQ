@@ -4,7 +4,7 @@ export CUDA_VISIBLE_DEVICES=0
 
 cd src
 
-for SEED in 5 10 15 20 25
+for SEED in 10 15 20 25
 do
 K=5
 INFER_PATH=$K
