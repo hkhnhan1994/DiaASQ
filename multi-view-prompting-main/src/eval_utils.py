@@ -69,8 +69,12 @@ def compute_f1_scores(pred_pt, gold_pt, verbose=True):
 
     if verbose:
         print(
+            f"gold_pt: {gold_pt},pred_pt: {pred_pt}, hit: {n_tp}"
+        )
+        print(
             f"number of gold spans: {n_gold}, predicted spans: {n_pred}, hit: {n_tp}"
         )
+        
 
     precision = float(n_tp) / float(n_pred) if n_pred != 0 else 0
     recall = float(n_tp) / float(n_gold) if n_gold != 0 else 0
@@ -105,7 +109,6 @@ def compute_scores(pred_seqs, gold_seqs, verbose=True):
 
         all_labels.append(gold_list)
         all_preds.append(pred_list)
-
     scores = compute_f1_scores(all_preds, all_labels)
 
     return scores, all_labels, all_preds
