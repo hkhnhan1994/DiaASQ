@@ -324,6 +324,7 @@ class T5FineTuner(pl.LightningModule):
         # ids = self.tokenizer("text", return_tensors='pt')['input_ids'].tolist()[0]
         """
         if not os.path.exists('./force_tokens.json'):
+            print("force_tokens.json does not exist, create a new one")
             dic = {"cate_tokens":{}, "all_tokens":{}, "sentiment_tokens":[], 'special_tokens':[]}
             for task in force_words.keys():
                 dic["all_tokens"][task] = {}
@@ -397,7 +398,7 @@ class T5FineTuner(pl.LightningModule):
             ret = force_tokens['sentiment_tokens'][task]
         elif cur_term in to_id['AT']:  # AT
             force_list = source_ids[batch_id].tolist()
-            if task != 'aste':  
+            if task not in['aste',"diaasq"]:  
                 force_list.extend(to_id['it'] + [1])  
             ret = force_list  
         elif cur_term in to_id['SS']:
@@ -435,7 +436,7 @@ def evaluate(model, task, data, data_type):
 
     outputs, targets, probs = [], [], []
     num_path = args.num_path
-    if task in ['aste', 'tasd']:
+    if task in ['aste', 'tasd', 'diaasq']:
         num_path = min(5, num_path)
 
     cache_file = os.path.join(
@@ -546,7 +547,7 @@ def evaluate(model, task, data, data_type):
                 output = []
                 for q in output_quads:
                     ac, at, sp, ot = q
-                    if tasks[i] == "aste":
+                    if tasks[i] in ["aste", "diaasq"]:
                         if 'null' not in [at, ot, sp]:  # aste has no 'null', for zero-shot only
                             output.append(f'[A] {at} [O] {ot} [S] {sp}')
 

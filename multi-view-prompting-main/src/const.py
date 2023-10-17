@@ -163,6 +163,7 @@ phone_aspect_cate_list = ["water", "night scene mode", "dont play games", "overa
 if Path("force_tokens.json").is_file():
     with open("force_tokens.json", 'r') as f:
         force_tokens = json.load(f)
+else: print("No force_tokens.json is not exists")
 
 cate_list = {
     "rest14": rest_aspect_cate_list,

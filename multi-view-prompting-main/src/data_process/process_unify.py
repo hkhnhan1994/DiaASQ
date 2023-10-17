@@ -35,7 +35,7 @@ def process(data_folder, tasks, out_dir):
                         if line != '':
                             words, tuples = line.split('####')
                         # parse aste
-                        if task == "aste":
+                        if task in ["aste", "diaasq"]:
                             aste_tuples = []
                             for _tuple in eval(tuples):
                                 parsed_tuple = parse_aste_tuple(
@@ -109,5 +109,5 @@ def process(data_folder, tasks, out_dir):
 
 
 if __name__ == "__main__":
-    tasks = ["acos", "asqp", "aste", "tasd"]
+    tasks = ["acos", "asqp", "aste", "tasd", "diaasq"]
     process("../data", tasks, "../data/unified/")
