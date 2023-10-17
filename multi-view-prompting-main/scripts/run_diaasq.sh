@@ -20,7 +20,7 @@ python main.py \
     --dataset "phone" \
     --model_name_or_path t5-base \
     --output_dir $OUT_DIR \
-    --num_train_epochs 30 \
+    --num_train_epochs 15 \
     --save_top_k 0 \
     --task $TASK \
     --top_k $K \
@@ -28,7 +28,7 @@ python main.py \
     --num_path $INFER_PATH \
     --seed $SEED \
     --train_batch_size 2 \
-    --gradient_accumulation_steps 1 \
+    --gradient_accumulation_steps 2 \
     --learning_rate 1e-4 \
     --lowercase \
     --sort_label \
