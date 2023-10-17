@@ -631,7 +631,7 @@ def train_function(args):
         model = T5FineTuner(args, tfm_model, tokenizer)
         # Enable gradients for all model parameters
         for param in model.parameters():
-            sys.stdout.write(f"force requires_grad to true:{param}")
+            # sys.stdout.write(f"force requires_grad to true:{param}")
             param.requires_grad = True
 
         # load data
